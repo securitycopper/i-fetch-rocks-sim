@@ -1,4 +1,4 @@
-from ifetchrocks_sim import ComponentNode, SaveModel, SaveReader, SaveSummary, ShipModel, SimulatorFacade
+from ifetchrocks_sim import ComponentNode, SaveModel, SaveReader, SaveSummary, ShipModel, Simulator
 
 
 def test_public_imports():
@@ -7,4 +7,4 @@ def test_public_imports():
     assert ShipModel is not None
     assert ComponentNode is not None
     assert SaveSummary is not None
-    assert SimulatorFacade is not None
+    assert Simulator is not None

@@ -24,12 +24,11 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
 ]
-dependencies = []
-
-[project.optional-dependencies]
-graph = [
+dependencies = [
   "pyvis>=0.3",
 ]
+
+[project.optional-dependencies]
 dev = [
   "pytest>=8.0",
   "ruff>=0.6",
