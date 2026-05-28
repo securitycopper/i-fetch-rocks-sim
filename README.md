@@ -167,6 +167,20 @@ ifetchrocks_sim/
 
 ---
 
+## Learning & References
+
+**Reverse-engineering guides:** See [`docs/`](docs/) for:
+- [Device port identification methodology](docs/reverse-engineering.md)
+- [Fixed probe inventory](docs/re-probe-setup.md)
+- [Reverse-engineering progress tracker](docs/unknown-devices-ship-cpu.md)
+- [Ship topology and architecture](docs/ship-topology.md)
+- [Room-to-room cable connections](docs/room-port-map.md)
+
+**Agents & skills:** See [`.github/README.md`](.github/README.md) for DeviceRE, CircuitBuilder,
+device-setup, and sim-diagnosis tools.
+
+---
+
 ## Development
 
 ```powershell
