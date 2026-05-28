@@ -95,7 +95,7 @@ def _load_debugger(save_uuid: str | None = None):
     finally:
         sys.stdout = old_stdout
 
-    from ifetchrocks_sim.debugger import SimulatorDebugger
+    from ifetchrocks.sim.debugger import SimulatorDebugger
     sim = _load_simulator(save_uuid)
     return SimulatorDebugger.for_career_save(sim, mainasm.iw)
 
@@ -192,7 +192,7 @@ def _cmd_inspect(args: list[str], opts: dict, stdout: TextIO, stderr: TextIO) ->
     if not args:
         stderr.write('Error: inspect requires a device UUID prefix\n')
         return 1
-    from ifetchrocks_sim.debugger import print_device
+    from ifetchrocks.sim.debugger import print_device
     prefix = args[0]
     sim = _load_simulator(opts['save'])
     print_device(sim, prefix, file=stdout)
@@ -223,7 +223,7 @@ def _cmd_probe(args: list[str], opts: dict, stdout: TextIO, stderr: TextIO) -> i
         stderr.write('Error: probe requires --ticks N\n')
         return 1
 
-    from ifetchrocks_sim.debugger import probe_wires, print_probe_table
+    from ifetchrocks.sim.debugger import probe_wires, print_probe_table
     dbg = _load_debugger(opts['save'])
     table = probe_wires(dbg.sim, wire_prefixes, range(ticks))
     print_probe_table(table, file=stdout)

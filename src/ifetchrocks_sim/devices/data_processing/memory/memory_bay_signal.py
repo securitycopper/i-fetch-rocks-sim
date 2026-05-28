@@ -111,8 +111,19 @@ class MemoryBaySignal:
     # ------------------------------------------------------------------
 
     def _load_from_drive(self, payload_uuid: str):
-        """Load drive contents into _memory from a .bin payload UUID."""
-        self._memory = _drive_loader.load_drive_words(payload_uuid)
+        """Load drive contents into _memory from a .bin payload UUID.
+
+        Prefers MemDrive (from ifetchrocks.cpu) when available so that
+        MemDrive.save_dir overrides (e.g. in tests) are respected.
+        Falls back to _drive_loader for standalone use.
+        """
+        try:
+            from ifetchrocks.cpu.programmer.memory_drive import MemDrive
+            drive = MemDrive()
+            drive.load(payload_uuid)
+            self._memory = [drive.read(index=i) for i in range(65536)]
+        except ImportError:
+            self._memory = _drive_loader.load_drive_words(payload_uuid)
 
     def _on_input(self, uuid: str, value: int):
         self._in_data = value & 0xFFFF
