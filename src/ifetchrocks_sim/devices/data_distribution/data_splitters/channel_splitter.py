@@ -64,16 +64,15 @@ class ChannelSplitter:
         graph_mappings(self)
 
     def change_event(self, component_id: str, large_data_in):
-        match component_id:
-            case '-998761478':
-                self.network_manager.get_large_network(self.large_network_out_data['1240779746']['uuid']).update_source(self.uuid, large_data_in)
-                offset = 0
-                if self.value:  # bit shift switch on
-                    offset = offset + 16
-                for wire_id, wire_dict in self.network_out_data.items():
-                    idx = int(wire_dict['description']) + offset
-                    wire_value = large_data_in[idx] if 0 <= idx < len(large_data_in) else 0
-                    wire_uuid = wire_dict['uuid']
-                    self.network_manager.get_network(wire_uuid).update_source(self.uuid, wire_value)
+        if component_id == '-998761478':
+            self.network_manager.get_large_network(self.large_network_out_data['1240779746']['uuid']).update_source(self.uuid, large_data_in)
+            offset = 0
+            if self.value:  # bit shift switch on
+                offset = offset + 16
+            for wire_id, wire_dict in self.network_out_data.items():
+                idx = int(wire_dict['description']) + offset
+                wire_value = large_data_in[idx] if 0 <= idx < len(large_data_in) else 0
+                wire_uuid = wire_dict['uuid']
+                self.network_manager.get_network(wire_uuid).update_source(self.uuid, wire_value)
 
 
