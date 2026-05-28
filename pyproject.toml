@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
 authors = [
-  { name = "I Fetch Rocks Community" }
+  { name = "securitycopper" }
 ]
 keywords = ["i-fetch-rocks", "save-files", "simulator", "reverse-engineering"]
 classifiers = [
@@ -33,9 +33,9 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/Matrix/i-fetch-rocks-sim"
-Repository = "https://github.com/Matrix/i-fetch-rocks-sim"
-Issues = "https://github.com/Matrix/i-fetch-rocks-sim/issues"
+Homepage = "https://github.com/securitycopper/i-fetch-rocks-sim"
+Repository = "https://github.com/securitycopper/i-fetch-rocks-sim"
+Issues = "https://github.com/securitycopper/i-fetch-rocks-sim/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/ifetchrocks_sim"]
