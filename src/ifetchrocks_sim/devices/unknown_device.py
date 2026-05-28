@@ -6,7 +6,7 @@ class UnknownDevice:
 
     def __init__(self, network_manager: DataNetworkManager, data: dict):
         self.data = data
-        self.name = f'Unknown[T:{data['type']},R:{data['location']}]'
+        self.name = f"Unknown[T:{data['type']},R:{data['location']}]"
         self.color = 'black'
         #self.image = 'http://ifetch.rocks/manual/images/DeviceLogicalNOR.png'
         self.uuid = data['uuid']
