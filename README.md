@@ -2,6 +2,8 @@
 
 A Python package for loading, inspecting, and simulating **I Fetch Rocks** save files.
 
+**Published on PyPI:** https://pypi.org/project/ifetchrocks-sim/
+
 The package reconstructs the in-game wire diagram from a save file as a Python object graph and lets you:
 
 - **Inspect** rooms, devices, and wires without loading the game.
