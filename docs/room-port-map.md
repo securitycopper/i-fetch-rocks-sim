@@ -193,3 +193,49 @@ for src_prefix, dst_prefix in CROSS_ROOM_BRIDGES:
         src.register_listener(lambda uuid, val, d=dst: d.update_source('room_bridge', val))
         dst.update_source('room_bridge', src.value)
 ```
+
+---
+
+## Cross-room cable topology from Unity Ship geometry
+
+See [`src/ifetchrocks_sim/ship_topology.py`](../src/ifetchrocks_sim/ship_topology.py).
+
+Each room's `RoomLinkSockets` GameObject in the original IFR Unity Ship
+hierarchy (`Ship/ShipGraphics/ShipInterior/Rooms/<Room>/RoomLinkSockets/*`)
+holds every cross-room socket as a GameObject whose **name encodes
+size/domain/direction** (`{Large|Small}{Power|Data}Socket{IN|Out}[Simple]`)
+and whose **world position** pins it to a specific wall. The cable mesh
+that links two sockets is unsaved, but the socket positions are
+deterministic — so spatial nearest-neighbour matching on (size, domain)
+across rooms recovers the topology.
+
+The module exposes:
+
+| Name | Purpose |
+|---|---|
+| `ROOM_UUID` | Unity room name → save room UUID (short form) |
+| `SOCKETS` | Full inventory of cross-room sockets (room, name, size, domain, direction, world pos) |
+| `compute_pairings(max_dist=5.0)` | Globally distance-sorted greedy pairing of Out↔In; returns `[(out, in)]` |
+| `PAIRINGS` | Cached `compute_pairings()` result |
+| `find_partner_by_unity_name(room, name)` | Quick partner lookup |
+
+**Validation:** the Unity inventory for `LifeSupportRoom` (`71bf00a3`) shows
+exactly 2 Large/Data In + 2 Large/Data Out sockets — matching the 4 known
+port keys above (`-325482860`, `789320731`, `1207760765`, `-1631889157`).
+
+**`CentralRoom` (`3cd1e5ba`) has no `RoomLinkSockets`** — consistent with
+its 16-passthrough role: cables enter Central from neighbours and exit
+without ever terminating on a Central-owned socket. Pairings across
+Central therefore appear as direct neighbour-to-neighbour links in the
+output, with longer cable distances (~1.2–2.2 m versus ~0.5 m for
+adjacent walls).
+
+### Mapping Unity sockets to save port keys
+
+For each `(room_uuid, size, domain, direction)` bucket the save and the
+Unity inventory should report the **same count** (verified for Life
+Support). Assign 1:1 by an agreed ordering — world position sorted on
+`(z, x)` is a clean choice — and use `find_partner_by_unity_name` to
+resolve the partner socket. The partner room's ordered port-key list then
+gives the partner save port key, turning every "DANGLING" cross-room
+wire into a fully-resolved network edge.
